@@ -1,6 +1,6 @@
 {
   "name": "@gdar463/kexec",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Replace your Node.js process with another process. Like Ruby exec. Updated to NAPI",
   "homepage": "https://github.com/gdar463/node-kexec",
   "repository": {

@@ -1,3 +1,9 @@
+4.1.0 / 2026-04-25
+------------------
+- added TS support
+- made exports in ES style
+- made Napi used namespace
+
 4.0.0 / 2026-04-25 (fork)
 ------------------
 - port to NAPI
