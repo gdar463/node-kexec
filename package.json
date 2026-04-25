@@ -1,11 +1,11 @@
 {
-  "name": "kexec",
-  "version": "3.0.0",
-  "description": "Replace your Node.js process with another process. Like Ruby exec.",
-  "homepage": "https://github.com/jprichardson/node-kexec",
+  "name": "@gdar463/kexec",
+  "version": "4.0.0",
+  "description": "Replace your Node.js process with another process. Like Ruby exec. Updated to NAPI",
+  "homepage": "https://github.com/gdar463/node-kexec",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jprichardson/node-kexec"
+    "url": "https://github.com/gdar463/node-kexec"
   },
   "scripts": {
     "lint": "standard",
@@ -18,17 +18,22 @@
     "process",
     "kexec"
   ],
-  "author": "JP Richardson <jprichardson@gmail.com>",
-  "license": "MIT",
+  "author": "JP Richardson <jprichardson@gmail.com> & gdar463 <contact@gdar463.com>",
+  "license": "MIT & GPL-3.0",
   "main": "./index",
   "engines": {
-    "node": ">=0.10"
+    "node": ">=8.0.0"
   },
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "standard": "^8.0.0"
+    "mocha": "^11.7.5",
+    "standard": "^17.1.2"
   },
   "dependencies": {
-    "nan": "^2.4.0"
+    "node-addon-api": "^8.7.0"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   }
 }

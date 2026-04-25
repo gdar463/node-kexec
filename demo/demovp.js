@@ -1,2 +1,2 @@
-var kexec = require('../')
-kexec('less', [ '/etc/fstab' ])
+import kexec from '../'
+kexec('less', ['/etc/fstab'])

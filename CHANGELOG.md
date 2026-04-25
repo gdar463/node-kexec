@@ -1,3 +1,9 @@
+4.0.0 / 2026-04-25 (fork)
+------------------
+- port to NAPI
+- updated Mocha tests to latest version
+- all changes from this point are under GPL-3.0 See: LICENSE-GPL-3.0.md
+
 3.0.0 / 2016-09-11
 ------------------
 - port to NaN [#31]

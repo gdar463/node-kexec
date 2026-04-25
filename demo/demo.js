@@ -1,2 +1,2 @@
-var kexec = require('../')
+import kexec from '../'
 kexec('top')
