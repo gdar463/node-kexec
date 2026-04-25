@@ -1,1 +1,1 @@
-module.exports = require('./build/Release/kexec.node').kexec
+export default require('./build/Release/kexec.node').kexec
