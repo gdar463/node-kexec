@@ -9,10 +9,7 @@
 #include <napi.h>
 #include <uv.h>
 
-using Napi::Array;
-using Napi::Env;
-using Napi::Object;
-using Napi::String;
+using namespace Napi;
 
 static int clear_cloexec(int desc) {
   int flags = fcntl(desc, F_GETFD, 0);
@@ -30,7 +27,7 @@ static int do_exec(char *argv[]) {
   return execvp(argv[0], argv);
 }
 
-Napi::Value kexec(const Napi::CallbackInfo &info) {
+Value kexec(const CallbackInfo &info) {
   Env env = info.Env();
   /*
    * Steve Blott: 17 Jan, 2014
@@ -52,23 +49,23 @@ Napi::Value kexec(const Napi::CallbackInfo &info) {
    */
 
   if (1 == info.Length() && info[0].IsString()) {
-    Napi::String str(env, info[0]);
+    String str(env, info[0]);
     std::string s = str.Utf8Value();
     char *argv[] = {const_cast<char *>("/bin/sh"), const_cast<char *>("-c"),
                     s.data(), NULL};
 
     int err = do_exec(argv);
 
-    return Napi::Number::New(env, err);
+    return Number::New(env, err);
   }
 
   if (2 == info.Length() && info[0].IsString() && info[1].IsArray()) {
-    Napi::String str(env, info[0]);
+    String str(env, info[0]);
 
     // Substantially copied from:
     //
     // https://github.com/joyent/node/blob/2944e03/src/node_child_process.cc#L92-104
-    Napi::Array argv_handle = info[1].As<Napi::Array>();
+    Array argv_handle = info[1].As<Array>();
     int argc = argv_handle.Length();
 
     int argv_length = argc + 1 + 1;
@@ -78,8 +75,7 @@ Napi::Value kexec(const Napi::CallbackInfo &info) {
     argv[0] = s.data();
     argv[argv_length - 1] = NULL;
     for (int i = 0; i < argc; i++) {
-      Napi::String arg(env,
-                       argv_handle.Get(Napi::Number::New(env, i)).ToString());
+      String arg(env, argv_handle.Get(Number::New(env, i)).ToString());
       argv[i + 1] = strdup(arg.Utf8Value().c_str());
     }
 
@@ -89,17 +85,16 @@ Napi::Value kexec(const Napi::CallbackInfo &info) {
       free(argv[i + 1]);
     delete[] argv;
 
-    return Napi::Number::New(env, err);
+    return Number::New(env, err);
   }
 
-  Napi::TypeError::New(env, "kexec: invalid arguments")
-      .ThrowAsJavaScriptException();
+  TypeError::New(env, "kexec: invalid arguments").ThrowAsJavaScriptException();
   return env.Null();
 }
 
 Object Init(Env env, Object exports) {
-  exports.Set(String::New(env, "kexec"), Napi::Function::New(env, kexec));
+  exports.Set(String::New(env, "kexec"), Function::New<kexec>(env));
   return exports;
 }
 
-NODE_API_MODULE(kexec, Init);
+NODE_API_MODULE(NODE_GYP_MODULE_NAME, Init);
